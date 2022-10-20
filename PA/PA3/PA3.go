@@ -1,10 +1,12 @@
 package main
 
-import "fmt"
-import "os"
-import "bufio"
-import "net"
-import "strconv"
+import (
+	"bufio"
+	"fmt"
+	"net"
+	"os"
+	"strconv"
+)
 
 func check(e error) {
 	if e != nil {
@@ -14,12 +16,12 @@ func check(e error) {
 
 func main() {
 	// open input file
-	inputFile := "" 
+	inputFile := ""
 	fmt.Printf("Input filename: ")
 	fmt.Scanf("%s", &inputFile)
 
 	// connect to server
-	conn, errc := net.Dial("tcp", "140.112.42.221:12000")
+	conn, errc := net.Dial("tcp", "140.112.42.221:12015")
 	check(errc)
 	defer conn.Close()
 
