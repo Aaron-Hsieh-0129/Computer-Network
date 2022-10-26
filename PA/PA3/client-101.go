@@ -1,8 +1,10 @@
 package main
 
-import "fmt"
-import "bufio"
-import "net"
+import (
+	"bufio"
+	"fmt"
+	"net"
+)
 
 func check(e error) {
 	if e != nil {
