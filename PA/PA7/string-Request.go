@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
-	"net/http"
+	"strings"
 )
 
 func check(e error) {
@@ -12,18 +12,23 @@ func check(e error) {
 		panic(e)
 	}
 }
+
 func main() {
 	fmt.Println("Launching server...")
 	ln, _ := net.Listen("tcp", ":12015")
 	defer ln.Close()
 	conn, _ := ln.Accept()
 	defer conn.Close()
-
 	reader := bufio.NewReader(conn)
-	req, err := http.ReadRequest(reader)
-	check(err)
-
-	fmt.Printf("Method: %s\n", req.Method)
-	fmt.Printf("Host: %s\n", req.Host)
-	fmt.Printf("User-Agent: %s\n", req.UserAgent())
+	for {
+		req, err := reader.ReadString('\n')
+		check(err)
+		if req == "\r\n" {
+			break
+		}
+		tokens := strings.Split(req, " ")
+		for i := range tokens {
+			fmt.Println(tokens[i])
+		}
+	}
 }
