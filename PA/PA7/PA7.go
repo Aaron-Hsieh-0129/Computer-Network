@@ -15,6 +15,14 @@ func check(e error) {
 	}
 }
 
+func processFile(file string) {
+	if file, errStat := os.Stat(file[1:]); errStat != nil {
+		fmt.Println("File not found")
+	} else {
+		fmt.Println("File size = " + strconv.Itoa(int(file.Size())))
+	}
+}
+
 func handleConnection(c net.Conn) {
 	reader := bufio.NewReader(c)
 	req, err := reader.ReadString('\n')
@@ -24,14 +32,6 @@ func handleConnection(c net.Conn) {
 	fileName := tokens[1]
 	processFile(fileName)
 	c.Close()
-}
-
-func processFile(file string) {
-	if file, errStat := os.Stat(file[1:]); errStat != nil {
-		fmt.Println("File not found")
-	} else {
-		fmt.Println("File size = " + strconv.Itoa(int(file.Size())))
-	}
 }
 
 func main() {
